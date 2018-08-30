@@ -1,11 +1,17 @@
 const WordSearcher = require('./WordSearcher');
+const fs = require('fs');
+const Chance = require('chance');
+
+const chance = new Chance();
+
 
 describe('WordSearcher', () => {
-    it('should return the string "file" when searchFile is called', () => {
-        expect(WordSearcher.searchFile()).toEqual('file');
-    });
+    it('should call fs readFileSync', () => {
+        const fsReadFileSync = jest.spyOn(fs, 'readFileSync');
 
-    it('should return the string "string" when searchString is called', () => {
-        expect(WordSearcher.searchString()).toEqual('string');
+        const inputFile = chance.word();
+        WordSearcher(inputFile);
+
+        expect(fsReadFileSync).toBeCalled();
     });
 });

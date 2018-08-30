@@ -4,7 +4,8 @@
   "description": "A simple word search",
   "main": "index.js",
   "scripts": {
-    "test": "jest --colors"
+    "test": "jest /src/",
+    "acceptance": "jest acceptanceTests.spec.js"
   },
   "repository": {
     "type": "git",
@@ -13,6 +14,7 @@
   "author": "Chris Duncan",
   "license": "ISC",
   "devDependencies": {
+    "chance": "^1.0.16",
     "jest": "^23.5.0"
   }
 }

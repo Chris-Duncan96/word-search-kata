@@ -1,12 +1,12 @@
-function searchString(string) {
-    return 'string'
+const fs = require('fs');
+
+function WordSearcher(inputFile) {
+    try {
+        fs.readFileSync(inputFile, 'utf8');
+    }
+    catch (e) {
+        ;
+    }
 }
 
-function searchFile(file) {
-    return 'file';
-}
-
-module.exports = {
-    searchString,
-    searchFile
-}
+module.exports = WordSearcher;
