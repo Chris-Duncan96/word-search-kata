@@ -1,11 +1,15 @@
 const fs = require('fs');
+const WordFinder = require('./WordFinder');
 
 function WordSearcher(inputFile) {
     try {
-        fs.readFileSync(inputFile, 'utf8');
+        const inputText = fs.readFileSync(inputFile, 'utf8');
+        const firstLine = inputText.split('\n',)[0];
+        const wordsToFind = firstLine.split(',');
+        WordFinder(wordsToFind);
     }
-    catch (e) {
-        ;
+    catch (error) {
+        console.log(error);
     }
 }
 
