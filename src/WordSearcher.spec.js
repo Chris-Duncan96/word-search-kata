@@ -19,11 +19,23 @@ describe('WordSearcher', () => {
         expect(fsReadFileSync).toBeCalledWith(inputFile, 'utf8');
     });
 
-    it('should call word finder with an array of strings to find, as read in by fs', () => {
-        inputFile = './WordSearches/oneLine.txt';
+    it('should call word finder with an array of strings to find, as read in by fs, as the first argument', () => {
+        inputFile = './WordSearches/twoLine.txt';
 
         WordSearcher(inputFile);
 
-        expect(WordFinder).toBeCalledWith(['EXAMPLE']);
+        expect(WordFinder.mock.calls[0][0]).toEqual(['EXAMPLE']);
+    });
+
+    it('should call word finder with an array of arrays of letters from the grid as the second argument', () => {
+        inputFile = './WordSearches/twoLine.txt';
+        const expectedGrid = [
+            ['E','X','A','M','P','L','E'],
+            ['G','I','B','R','I','S','H']
+        ];
+
+        WordSearcher(inputFile);
+
+        expect(WordFinder.mock.calls[0][1]).toEqual(expectedGrid);
     });
 });
