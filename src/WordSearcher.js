@@ -1,5 +1,5 @@
 const fs = require('fs');
-const WordFinder = require('./WordFinder');
+const findWordsInGrid = require('./findWordsInGrid');
 
 function WordSearcher(inputFile) {
     try {
@@ -10,7 +10,7 @@ function WordSearcher(inputFile) {
         const remainingLines = inputTextLines.slice(1);
         const grid = remainingLines.map((line) => line.split(','));
 
-        WordFinder(wordsToFind, grid);
+        findWordsInGrid(wordsToFind, grid);
     }
     catch (error) {
         console.log(error);

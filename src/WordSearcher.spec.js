@@ -1,9 +1,9 @@
 const fs = require('fs');
 const Chance = require('chance');
 const WordSearcher = require('./WordSearcher');
-const WordFinder = require('./WordFinder');
+const findWordsInGrid = require('./findWordsInGrid');
 
-jest.mock('./WordFinder');
+jest.mock('./findWordsInGrid');
 
 const chance = new Chance();
 
@@ -24,7 +24,7 @@ describe('WordSearcher', () => {
 
         WordSearcher(inputFile);
 
-        expect(WordFinder.mock.calls[0][0]).toEqual(['EXAMPLE']);
+        expect(findWordsInGrid.mock.calls[0][0]).toEqual(['EXAMPLE']);
     });
 
     it('should call word finder with an array of arrays of letters from the grid as the second argument', () => {
@@ -36,6 +36,6 @@ describe('WordSearcher', () => {
 
         WordSearcher(inputFile);
 
-        expect(WordFinder.mock.calls[0][1]).toEqual(expectedGrid);
+        expect(findWordsInGrid.mock.calls[0][1]).toEqual(expectedGrid);
     });
 });
