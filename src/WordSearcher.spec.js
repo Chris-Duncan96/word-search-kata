@@ -12,7 +12,7 @@ describe('WordSearcher', () => {
 
     it('should call fs readFileSync with the given file, and the proper file format', () => {
         const fsReadFileSync = jest.spyOn(fs, 'readFileSync');
-        inputFile = chance.word();
+        inputFile = './WordSearches/twoLine.txt';
 
         WordSearcher(inputFile);
 
