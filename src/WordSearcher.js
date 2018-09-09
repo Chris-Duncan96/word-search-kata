@@ -13,7 +13,7 @@ function WordSearcher(inputFile) {
 
         const foundWords = findWordsInGrid(wordsToFind, grid);
 
-        return formatOutput(foundWords);
+        return foundWords;
     }
     catch (error) {
         console.log(error);

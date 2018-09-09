@@ -1,34 +1,71 @@
-function getLetterLocations(word, grid) {
+function searchRightFromLetter(wordAsArray, grid, rowIndex, letterIndex) {
     let letterLocations = '';
-    const wordAsArray = word.split('');
-    let locationInWord = 0;
     let nextLetter = wordAsArray[0];
-
-    grid.some((row, rowIndex) => {
-        row.some((letter, letterIndex) => {
-            if(nextLetter === letter) {
-                nextLetter = wordAsArray[++locationInWord];
-                letterLocations += '('+rowIndex+','+letterIndex+')';
-                if(locationInWord === wordAsArray.length) {
-                    return letterLocations;
-                } else {
-                    letterLocations += ',';
-                }
+    let locationInWord = 0;
+    while (letterIndex + locationInWord < grid[0].length) {
+        let letter = grid[rowIndex][letterIndex + locationInWord];
+        if (nextLetter === letter) {
+            letterLocations += '('+rowIndex+','+(letterIndex + locationInWord)+')';
+            nextLetter = wordAsArray[++locationInWord];
+            if(locationInWord === wordAsArray.length) {
+                console.log(letterLocations);
+                return letterLocations;
             } else {
-                letterLocations = '';
-                locationInWord = 0;
+                letterLocations += ',';
+            }
+        } else {
+            return null;
+        }
+    }
+}
+
+function searchDownFromLetter(wordAsArray, grid, rowIndex, letterIndex) {
+    let letterLocations = '';
+    let nextLetter = wordAsArray[0];
+    let locationInWord = 0;
+    while (rowIndex + locationInWord < grid.length) {
+        let letter = grid[rowIndex+ locationInWord][letterIndex];
+        if (nextLetter === letter) {
+            letterLocations += '('+(rowIndex+locationInWord)+','+(letterIndex)+')';
+            nextLetter = wordAsArray[++locationInWord];
+            if(locationInWord === wordAsArray.length) {
+                console.log(letterLocations);
+                return letterLocations;
+            } else {
+                letterLocations += ',';
+            }
+        } else {
+            return null;
+        }
+    }
+}
+
+function searchAroundLetter(word, grid, rowIndex, letterIndex) {
+    let foundToTheRight = searchRightFromLetter(word, grid, rowIndex, letterIndex);
+    if (foundToTheRight) { 
+        return foundToTheRight;
+    }
+    return searchDownFromLetter(word, grid, rowIndex, letterIndex);
+}
+
+function getLetterLocations(word, grid) {
+    const wordAsArray = word.split('');
+    const firstLetter = wordAsArray[0];
+    let letterLocations;
+
+    grid.find((row, rowIndex) => {
+        return row.find((letter, letterIndex) => {
+            if (letter === firstLetter){
+               letterLocations = searchAroundLetter(wordAsArray, grid, rowIndex, letterIndex);
+               return letterLocations;
             }
         });
-        if(locationInWord === wordAsArray.length) {
-            return letterLocations;
-        }
     });
     return letterLocations;
 }
 
 function findWordsInGrid(words, grid) {
     return words.map((word) => {
-        console.log(getLetterLocations(word, grid))
         return word + ': ' + getLetterLocations(word, grid);
     });
 }
