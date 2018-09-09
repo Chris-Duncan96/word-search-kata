@@ -2,12 +2,11 @@ function getLetterLocations(word, grid) {
     let letterLocations = '';
     const wordAsArray = word.split('');
     let locationInWord = 0;
-    let nextLetterToFind = wordAsArray[0];
 
     grid.some((row, rowIndex) => {
         row.some((letter, letterIndex) => {
-            if(nextLetterToFind === letter) {
-                nextLetterToFind = wordAsArray[locationInWord++];
+            if(wordAsArray[locationInWord] === letter) {
+                locationInWord++;
                 letterLocations += '('+rowIndex+','+letterIndex+')';
                 if(locationInWord === wordAsArray.length) {
                     return letterLocations;
@@ -28,6 +27,7 @@ function getLetterLocations(word, grid) {
 
 function findWordsInGrid(words, grid) {
     return words.map((word) => {
+        console.log(getLetterLocations(word, grid))
         return word + ': ' + getLetterLocations(word, grid);
     });
 }
