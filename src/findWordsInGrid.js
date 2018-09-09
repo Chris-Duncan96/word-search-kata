@@ -3,8 +3,8 @@ function getLetterLocations(word, grid) {
     const wordAsArray = word.split('');
     let locationInWord = 0;
 
-    grid.map((row, rowIndex) => {
-        row.forEach((letter, letterIndex) => {
+    grid.some((row, rowIndex) => {
+        row.some((letter, letterIndex) => {
             if(wordAsArray[locationInWord] === letter) {
                 locationInWord++;
                 letterLocations += '('+rowIndex+','+letterIndex+')';
@@ -18,13 +18,16 @@ function getLetterLocations(word, grid) {
                 locationInWord = 0;
             }
         });
-        return letterLocations;
+        if(locationInWord === wordAsArray.length) {
+            return letterLocations;
+        }
     });
     return letterLocations;
 }
 
 function findWordsInGrid(words, grid) {
     return words.map((word) => {
+        console.log(getLetterLocations(word, grid))
         return word + ': ' + getLetterLocations(word, grid);
     });
 }
