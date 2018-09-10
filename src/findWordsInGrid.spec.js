@@ -1,7 +1,7 @@
 const findWordsInGrid = require('./findWordsInGrid');
 
 describe('findWordsInGrid', () => {
-    describe('output', () => {
+    describe('output format', () => {
         it('should be a function', () => {
             expect(typeof findWordsInGrid).toBe('function');
         });
@@ -11,63 +11,81 @@ describe('findWordsInGrid', () => {
             const grid = [['']];
     
             const result = findWordsInGrid(words, grid)
-            const expected = ['WORD: (0,0),(0,1),(0,2),(0,3)'];
     
             expect(typeof result).toEqual('object');
         });
-    })
+    });
+
     describe('directional search', () => {
         it('should find a horizontal word when that word is the only thing in the grid', () => {
             const words = ['WORD'];
             const grid = [['W','O','R','D']];
     
             const result = findWordsInGrid(words, grid)
-            const expected = ['WORD: (0,0),(0,1),(0,2),(0,3)'];
+            const expected = ['WORD: (0,0),(1,0),(2,0),(3,0)'];
     
             expect(result).toEqual(expected);
         });
     
         it('should find a horizontal word when that word when it is not on the first line', () => {
             const words = ['WORD'];
-            const grid = [['A','A','A','A'],['W','O','R','D']];
+            const grid = [
+                            ['~','~','~','~'],
+                            ['W','O','R','D']
+                        ];
     
             const result = findWordsInGrid(words, grid)
-            const expected = ['WORD: (1,0),(1,1),(1,2),(1,3)'];
+            const expected = ['WORD: (0,1),(1,1),(2,1),(3,1)'];
     
             expect(result).toEqual(expected);
         });
     
         it('should find a horizontal word when that word when it is aligned on the right side of the grid', () => {
             const words = ['WORD'];
-            const grid = [['A','W','O','R','D']];
+            const grid = [['~','W','O','R','D']];
     
             const result = findWordsInGrid(words, grid)
-            const expected = ['WORD: (0,1),(0,2),(0,3),(0,4)'];
+            const expected = ['WORD: (1,0),(2,0),(3,0),(4,0)'];
     
             expect(result).toEqual(expected);
         });
 
         it('should find multiple horizontal words', () => {
             const words = ['WORD','TEST'];
-            const grid =    [['W','O','R','D'],
-                            ['T','E','S','T']];
+            const grid = [
+                            ['W','O','R','D'],
+                            ['T','E','S','T']
+                        ];
     
             const result = findWordsInGrid(words, grid)
-            const expected = ['WORD: (0,0),(0,1),(0,2),(0,3)',
-                            'TEST: (1,0),(1,1),(1,2),(1,3)'];
+            const expected = ['WORD: (0,0),(1,0),(2,0),(3,0)',
+                            'TEST: (0,1),(1,1),(2,1),(3,1)'];
     
             expect(result).toEqual(expected);
         });
 
         it('should find a horizontal word in the center of the grid', () => {
             const words = ['WORD'];
-            const grid =    [['A','A','A','A','A','A'],
-                            ['A','W','O','R','D','A'],
-                            ['A','A','A','A','A','A']];
+            const grid =    [['~','~','~','~','~','~'],
+                            ['~','W','O','R','D','~'],
+                            ['~','~','~','~','~','~']];
                             
     
             const result = findWordsInGrid(words, grid)
-            const expected = ['WORD: (1,1),(1,2),(1,3),(1,4)'];
+            const expected = ['WORD: (1,1),(2,1),(3,1),(4,1)'];
+    
+            expect(result).toEqual(expected);
+        });
+
+        it('should find a reverse horizontal word in the center of the grid', () => {
+            const words = ['WORD'];
+            const grid =    [['~','~','~','~','~','~'],
+                            ['~','D','R','O','W','~'],
+                            ['~','~','~','~','~','~']];
+                            
+    
+            const result = findWordsInGrid(words, grid)
+            const expected = ['WORD: (4,1),(3,1),(2,1),(1,1)'];
     
             expect(result).toEqual(expected);
         });
@@ -82,7 +100,7 @@ describe('findWordsInGrid', () => {
             ];
     
             const result = findWordsInGrid(words, grid)
-            const expected = ['WORD: (0,0),(1,0),(2,0),(3,0)'];
+            const expected = ['WORD: (0,0),(0,1),(0,2),(0,3)'];
     
             expect(result).toEqual(expected);
         });
@@ -90,15 +108,15 @@ describe('findWordsInGrid', () => {
         it('should find vertical words when placed on the bottom right of the grid', () => {
             const words = ['WORD'];
             const grid = [
-                ['A','A'],
-                ['A','W'],
-                ['A','O'],
-                ['A','R'],
-                ['A','D']
+                ['~','~'],
+                ['~','W'],
+                ['~','O'],
+                ['~','R'],
+                ['~','D']
             ];
     
             const result = findWordsInGrid(words, grid)
-            const expected = ['WORD: (1,1),(2,1),(3,1),(4,1)'];
+            const expected = ['WORD: (1,1),(1,2),(1,3),(1,4)'];
     
             expect(result).toEqual(expected);
         });
@@ -106,28 +124,113 @@ describe('findWordsInGrid', () => {
         it('should find vertical words in the center of the grid', () => {
             const words = ['WORD'];
             const grid = [
-                ['A','A','A'],
-                ['A','W','A'],
-                ['A','O','A'],
-                ['A','R','A'],
-                ['A','D','A'],
-                ['A','A','A']
+                ['~','~','~'],
+                ['~','W','~'],
+                ['~','O','~'],
+                ['~','R','~'],
+                ['~','D','~'],
+                ['~','~','~']
             ];
     
             const result = findWordsInGrid(words, grid)
-            const expected = ['WORD: (1,1),(2,1),(3,1),(4,1)'];
+            const expected = ['WORD: (1,1),(1,2),(1,3),(1,4)'];
+    
+            expect(result).toEqual(expected);
+        });
+
+        it('should find reverse vertical words in the center of the grid', () => {
+            const words = ['WORD'];
+            const grid = [
+                ['~','~','~'],
+                ['~','D','~'],
+                ['~','R','~'],
+                ['~','O','~'],
+                ['~','W','~'],
+                ['~','~','~']
+            ];
+    
+            const result = findWordsInGrid(words, grid)
+            const expected = ['WORD: (1,4),(1,3),(1,2),(1,1)'];
+    
+            expect(result).toEqual(expected);
+        });
+
+        it('should find downward slant words in the center of the grid', () => {
+            const words = ['WORD'];
+            const grid = [
+                ['~','~','~','~','~','~'],
+                ['~','W','~','~','~','~'],
+                ['~','~','O','~','~','~'],
+                ['~','~','~','R','~','~'],
+                ['~','~','~','~','D','~'],
+                ['~','~','~','~','~','~'],
+            ];
+    
+            const result = findWordsInGrid(words, grid)
+            const expected = ['WORD: (1,1),(2,2),(3,3),(4,4)'];
+    
+            expect(result).toEqual(expected);
+        });
+
+        it('should find upward slant words in the center of the grid', () => {
+            const words = ['WORD'];
+            const grid = [
+                ['~','~','~','~','~','~'],
+                ['~','~','~','~','D','~'],
+                ['~','~','~','R','~','~'],
+                ['~','~','O','~','~','~'],
+                ['~','W','~','~','~','~'],
+                ['~','~','~','~','~','~'],
+            ];
+    
+            const result = findWordsInGrid(words, grid)
+            const expected = ['WORD: (1,4),(2,3),(3,2),(4,1)'];
+    
+            expect(result).toEqual(expected);
+        });
+
+        it('should find reversed downward slant words in the center of the grid', () => {
+            const words = ['WORD'];
+            const grid = [
+                ['~','~','~','~','~','~'],
+                ['~','D','~','~','~','~'],
+                ['~','~','R','~','~','~'],
+                ['~','~','~','O','~','~'],
+                ['~','~','~','~','W','~'],
+                ['~','~','~','~','~','~'],
+            ];
+    
+            const result = findWordsInGrid(words, grid)
+            const expected = ['WORD: (4,4),(3,3),(2,2),(1,1)'];
+    
+            expect(result).toEqual(expected);
+        });
+
+        it('should find reversed upward slant words in the center of the grid', () => {
+            const words = ['WORD'];
+            const grid = [
+                ['~','~','~','~','~','~'],
+                ['~','~','~','~','W','~'],
+                ['~','~','~','O','~','~'],
+                ['~','~','R','~','~','~'],
+                ['~','D','~','~','~','~'],
+                ['~','~','~','~','~','~'],
+            ];
+    
+            const result = findWordsInGrid(words, grid)
+            const expected = ['WORD: (4,1),(3,2),(2,3),(1,4)'];
     
             expect(result).toEqual(expected);
         });
 
         it('should not return partial finds as the full word when searching horizontally', () => {
             const words = ['WORD'];
-            const grid =    [['W','O','R','A','A'],
-                            ['W','O','R','D','A']];
+            const grid =    [['W','O','R','~','~'],
+                            ['W','O','R','D','~']];
                             
     
             const result = findWordsInGrid(words, grid)
-            const expected = ['WORD: (1,0),(1,1),(1,2),(1,3)'];
+            const expected = ['WORD: (0,1),(1,1),(2,1),(3,1)'];
     
             expect(result).toEqual(expected);
         });
