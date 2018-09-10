@@ -11,9 +11,7 @@ function WordSearcher(inputFile) {
         const remainingLines = inputTextLines.slice(1);
         const grid = remainingLines.map((line) => line.split(','));
 
-        const foundWords = findWordsInGrid(wordsToFind, grid);
-
-        return foundWords.join('\n');
+        return findWordsInGrid(wordsToFind, grid).join('\n');
     }
     catch (error) {
         console.log(error);

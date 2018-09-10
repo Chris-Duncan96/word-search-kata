@@ -63,6 +63,7 @@ function getLetterLocations(word, grid) {
             }
         });
     });
+
     return letterLocations;
 }
 

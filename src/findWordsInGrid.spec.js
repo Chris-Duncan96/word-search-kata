@@ -9,9 +9,9 @@ describe('findWordsInGrid', () => {
         it('should return an object when given two arrays of strings as arguments', () => {
             const words = [''];
             const grid = [['']];
-    
+
             const result = findWordsInGrid(words, grid)
-    
+
             expect(typeof result).toEqual('object');
         });
     });
@@ -20,33 +20,33 @@ describe('findWordsInGrid', () => {
         it('should find a horizontal word when that word is the only thing in the grid', () => {
             const words = ['WORD'];
             const grid = [['W','O','R','D']];
-    
+
             const result = findWordsInGrid(words, grid)
             const expected = ['WORD: (0,0),(1,0),(2,0),(3,0)'];
-    
+
             expect(result).toEqual(expected);
         });
-    
+
         it('should find a horizontal word when that word when it is not on the first line', () => {
             const words = ['WORD'];
             const grid = [
                             ['~','~','~','~'],
                             ['W','O','R','D']
                         ];
-    
+
             const result = findWordsInGrid(words, grid)
             const expected = ['WORD: (0,1),(1,1),(2,1),(3,1)'];
-    
+
             expect(result).toEqual(expected);
         });
-    
+
         it('should find a horizontal word when that word when it is aligned on the right side of the grid', () => {
             const words = ['WORD'];
             const grid = [['~','W','O','R','D']];
-    
+
             const result = findWordsInGrid(words, grid)
             const expected = ['WORD: (1,0),(2,0),(3,0),(4,0)'];
-    
+
             expect(result).toEqual(expected);
         });
 
@@ -56,11 +56,11 @@ describe('findWordsInGrid', () => {
                             ['W','O','R','D'],
                             ['T','E','S','T']
                         ];
-    
+
             const result = findWordsInGrid(words, grid)
             const expected = ['WORD: (0,0),(1,0),(2,0),(3,0)',
                             'TEST: (0,1),(1,1),(2,1),(3,1)'];
-    
+
             expect(result).toEqual(expected);
         });
 
@@ -69,8 +69,8 @@ describe('findWordsInGrid', () => {
             const grid =    [['~','~','~','~','~','~'],
                             ['~','W','O','R','D','~'],
                             ['~','~','~','~','~','~']];
-                            
-    
+
+
             const result = findWordsInGrid(words, grid)
             const expected = ['WORD: (1,1),(2,1),(3,1),(4,1)'];
     
@@ -82,14 +82,14 @@ describe('findWordsInGrid', () => {
             const grid =    [['~','~','~','~','~','~'],
                             ['~','D','R','O','W','~'],
                             ['~','~','~','~','~','~']];
-                            
-    
+
+
             const result = findWordsInGrid(words, grid)
             const expected = ['WORD: (4,1),(3,1),(2,1),(1,1)'];
-    
+
             expect(result).toEqual(expected);
         });
-    
+
         it('should find vertical words when they are the only thing in the grid', () => {
             const words = ['WORD'];
             const grid = [
@@ -98,10 +98,10 @@ describe('findWordsInGrid', () => {
                 ['R'],
                 ['D']
             ];
-    
+
             const result = findWordsInGrid(words, grid)
             const expected = ['WORD: (0,0),(0,1),(0,2),(0,3)'];
-    
+
             expect(result).toEqual(expected);
         });
 
@@ -114,10 +114,10 @@ describe('findWordsInGrid', () => {
                 ['~','R'],
                 ['~','D']
             ];
-    
+
             const result = findWordsInGrid(words, grid)
             const expected = ['WORD: (1,1),(1,2),(1,3),(1,4)'];
-    
+
             expect(result).toEqual(expected);
         });
 
@@ -131,10 +131,10 @@ describe('findWordsInGrid', () => {
                 ['~','D','~'],
                 ['~','~','~']
             ];
-    
+
             const result = findWordsInGrid(words, grid)
             const expected = ['WORD: (1,1),(1,2),(1,3),(1,4)'];
-    
+
             expect(result).toEqual(expected);
         });
 
@@ -148,10 +148,10 @@ describe('findWordsInGrid', () => {
                 ['~','W','~'],
                 ['~','~','~']
             ];
-    
+
             const result = findWordsInGrid(words, grid)
             const expected = ['WORD: (1,4),(1,3),(1,2),(1,1)'];
-    
+
             expect(result).toEqual(expected);
         });
 
@@ -165,7 +165,7 @@ describe('findWordsInGrid', () => {
                 ['~','~','~','~','D','~'],
                 ['~','~','~','~','~','~'],
             ];
-    
+
             const result = findWordsInGrid(words, grid)
             const expected = ['WORD: (1,1),(2,2),(3,3),(4,4)'];
     
@@ -182,7 +182,7 @@ describe('findWordsInGrid', () => {
                 ['~','W','~','~','~','~'],
                 ['~','~','~','~','~','~'],
             ];
-    
+
             const result = findWordsInGrid(words, grid)
             const expected = ['WORD: (1,4),(2,3),(3,2),(4,1)'];
     
@@ -199,10 +199,10 @@ describe('findWordsInGrid', () => {
                 ['~','~','~','~','W','~'],
                 ['~','~','~','~','~','~'],
             ];
-    
+
             const result = findWordsInGrid(words, grid)
             const expected = ['WORD: (4,4),(3,3),(2,2),(1,1)'];
-    
+
             expect(result).toEqual(expected);
         });
 
@@ -216,10 +216,10 @@ describe('findWordsInGrid', () => {
                 ['~','D','~','~','~','~'],
                 ['~','~','~','~','~','~'],
             ];
-    
+
             const result = findWordsInGrid(words, grid)
             const expected = ['WORD: (4,1),(3,2),(2,3),(1,4)'];
-    
+
             expect(result).toEqual(expected);
         });
 
@@ -228,12 +228,11 @@ describe('findWordsInGrid', () => {
             const grid =    [['W','O','R','~','~'],
                             ['W','O','R','D','~']];
                             
-    
+
             const result = findWordsInGrid(words, grid)
             const expected = ['WORD: (0,1),(1,1),(2,1),(3,1)'];
-    
+
             expect(result).toEqual(expected);
         });
     })
-
 });
