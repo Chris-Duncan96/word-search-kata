@@ -9,67 +9,72 @@ function formatLocation(x, y) {
     return '(' + (x) + ',' + (y) + ')';
 }
 
-function directionalSearch(wordAsArray, grid, rowIndex, letterIndex, rowDirection, letterDirection) {
-    let letterLocations = '';
-    let nextLetter = wordAsArray[0];
+function directionalSearch(wordAsArray, grid, initialRowIndex, initialLetterIndex, verticalDirection, horizontalDirection) {
+    let locationsOfLetters = '';
     let locationInWord = 0;
-    let x = letterIndex + letterDirection * locationInWord;
-    let y = rowIndex + rowDirection * locationInWord;
-    while (locationIsInGrid(grid, x, y)) {
-        let letter = grid[y][x];
-        if (nextLetter === letter) {
-            letterLocations += formatLocation(x, y);
+    let x = initialLetterIndex;
+    let y = initialRowIndex;
 
-            nextLetter = wordAsArray[++locationInWord];
-            if (locationInWord === wordAsArray.length) {
-                return letterLocations;
+    do {
+        let nextLetterInWord = wordAsArray[locationInWord++]
+        let nextLetterInGrid = grid[y][x];
+
+        if (nextLetterInWord === nextLetterInGrid) {
+            locationsOfLetters += formatLocation(x, y);
+            if (wordAsArray.length === locationInWord) {
+                return locationsOfLetters;
             } else {
-                letterLocations += ',';
+                locationsOfLetters += ',';
             }
         } else {
             return null;
         }
-        x = letterIndex + letterDirection * locationInWord;
-        y = rowIndex + rowDirection * locationInWord;
-    }
+
+        x += horizontalDirection;
+        y += verticalDirection;
+    } while ((locationIsInGrid(grid, x, y)))
 }
 
 function searchAroundLetter(wordAsArray, grid, rowIndex, letterIndex) {
     const directions = [-1,0,1];
-    let searchResults;
+    let foundWord;
 
-    directions.some((rowDirection) => {
-        return directions.some((letterDirection) => {
-            if (letterDirection !== 0 || rowDirection !== 0) {
-                searchResults = directionalSearch(wordAsArray, grid, rowIndex, letterIndex, rowDirection, letterDirection);
-                return searchResults;
+    directions.some((verticalDirection) => {
+        return directions.some((horizontalDirection) => {
+            if (verticalDirection !== 0 || horizontalDirection !== 0) {
+                foundWord = directionalSearch(wordAsArray, grid, rowIndex, letterIndex, verticalDirection, horizontalDirection);
+                if (foundWord) {
+                    return foundWord;
+                }
             }
         });
     });
 
-    return searchResults;
+    return foundWord;
 }
 
-function getLetterLocations(word, grid) {
+function findLocationsOfLetters(word, grid) {
     const wordAsArray = word.split('');
     const firstLetter = wordAsArray[0];
-    let letterLocations;
+    let foundLetters;
 
     grid.some((row, rowIndex) => {
         return row.some((letter, letterIndex) => {
             if (letter === firstLetter){
-               letterLocations = searchAroundLetter(wordAsArray, grid, rowIndex, letterIndex);
-               return letterLocations;
+                foundLetters = searchAroundLetter(wordAsArray, grid, rowIndex, letterIndex);
+                if (foundLetters) {
+                    return foundLetters;
+                }
             }
         });
     });
 
-    return letterLocations;
+    return foundLetters;
 }
 
 function findWordsInGrid(words, grid) {
     return words.map((word) => {
-        return word + ': ' + getLetterLocations(word, grid);
+        return word + ': ' + findLocationsOfLetters(word, grid);
     });
 }
 

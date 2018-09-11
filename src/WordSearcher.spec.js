@@ -28,8 +28,9 @@ describe('WordSearcher', () => {
         expect(findWordsInGrid.mock.calls[0][1]).toEqual(expectedGrid);
     });
 
-    it('should properly format what is returned from findWordsInGrid', () => {
+    it('should format the return such that each element in the array is on its own line', () => {
         findWordsInGrid.mockImplementation(() => ['BONES: (0,6),(0,7),(0,8),(0,9),(0,10)', 'KHAN: (5,9),(5,8),(5,7),(5,6)']);
+
         const expectedReturn = 'BONES: (0,6),(0,7),(0,8),(0,9),(0,10)\nKHAN: (5,9),(5,8),(5,7),(5,6)';
 
         expect(WordSearcher(defaultInputFile)).toEqual(expectedReturn);

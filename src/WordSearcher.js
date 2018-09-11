@@ -3,15 +3,17 @@ const findWordsInGrid = require('./findWordsInGrid');
 
 function WordSearcher(inputFile) {
     try {
-        const inputText = fs.readFileSync(inputFile, 'utf8');
-        const inputTextLines = inputText.split('\n',)
+        const inputFromFile = fs.readFileSync(inputFile, 'utf8');
+        const inputAsTextLines = inputFromFile.split('\n',)
 
-        const firstLine = inputTextLines[0];
+        const firstLine = inputAsTextLines[0];
         const wordsToFind = firstLine.split(',');
-        const remainingLines = inputTextLines.slice(1);
+
+        const remainingLines = inputAsTextLines.slice(1);
         const grid = remainingLines.map((line) => line.split(','));
 
-        return findWordsInGrid(wordsToFind, grid).join('\n');
+        const wordLocations = findWordsInGrid(wordsToFind, grid);
+        return wordLocations.join('\n');
     }
     catch (error) {
         console.log(error);
