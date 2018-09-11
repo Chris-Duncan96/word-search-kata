@@ -20,7 +20,7 @@ describe('WordSearcher', () => {
     it('should call word finder with an array of arrays of letters from the grid as the second argument', () => {
         const expectedGrid = [
             ['E','X','A','M','P','L','E'],
-            ['G','I','B','R','I','S','H']
+            ['~','~','~','~','~','~','~']
         ];
 
         WordSearcher(defaultInputFile);
@@ -29,9 +29,12 @@ describe('WordSearcher', () => {
     });
 
     it('should format the return such that each element in the array is on its own line', () => {
-        findWordsInGrid.mockImplementation(() => ['BONES: (0,6),(0,7),(0,8),(0,9),(0,10)', 'KHAN: (5,9),(5,8),(5,7),(5,6)']);
+        findWordsInGrid.mockImplementation(() => [
+            'EXAMPLE: (0,0),(1,0),(2,0),(3,0),(4,0),(5,0)', 
+            '~~~~~~: (0,1),(1,1),(2,1),(3,1),(4,1),(5,1)'
+        ]);
 
-        const expectedReturn = 'BONES: (0,6),(0,7),(0,8),(0,9),(0,10)\nKHAN: (5,9),(5,8),(5,7),(5,6)';
+        const expectedReturn = 'EXAMPLE: (0,0),(1,0),(2,0),(3,0),(4,0),(5,0)\n~~~~~~: (0,1),(1,1),(2,1),(3,1),(4,1),(5,1)';
 
         expect(WordSearcher(defaultInputFile)).toEqual(expectedReturn);
     });
