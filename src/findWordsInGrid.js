@@ -1,4 +1,4 @@
-function locationIsInGrid(grid, x, y) {
+function locationIsInGrid(grid, y, x) {
     return  x >= 0 &&
             y >= 0 &&
             x < grid[0].length &&
@@ -9,7 +9,7 @@ function formatLocation(x, y) {
     return '(' + (x) + ',' + (y) + ')';
 }
 
-function directionalSearch(wordAsArray, grid, initialRowIndex, initialLetterIndex, verticalDirection, horizontalDirection) {
+function directionalSearch(wordAsArray, grid, initialRowIndex, initialLetterIndex, {verticalDirection, horizontalDirection}) {
     let locationsOfLetters = '';
     let locationInWord = 0;
     let x = initialLetterIndex;
@@ -32,17 +32,18 @@ function directionalSearch(wordAsArray, grid, initialRowIndex, initialLetterInde
 
         x += horizontalDirection;
         y += verticalDirection;
-    } while ((locationIsInGrid(grid, x, y)))
+    } while ((locationIsInGrid(grid, y, x)))
 }
 
 function searchAroundLetter(wordAsArray, grid, rowIndex, letterIndex) {
     const directions = [-1,0,1];
-    let foundWord;
+    let foundWord, directionPair;
 
     directions.some((verticalDirection) => {
         return directions.some((horizontalDirection) => {
             if (verticalDirection !== 0 || horizontalDirection !== 0) {
-                foundWord = directionalSearch(wordAsArray, grid, rowIndex, letterIndex, verticalDirection, horizontalDirection);
+                directionPair = {verticalDirection, horizontalDirection};
+                foundWord = directionalSearch(wordAsArray, grid, rowIndex, letterIndex, directionPair);
                 if (foundWord) {
                     return foundWord;
                 }
