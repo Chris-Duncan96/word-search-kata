@@ -1,23 +1,23 @@
 const findWordsInGrid = require('./findWordsInGrid');
 
 describe('findWordsInGrid', () => {
-    it('should be a function', () => {
+    it('should return a function', () => {
         expect(typeof findWordsInGrid).toBe('function');
     });
 
-    it('should return an object when given two arrays of strings as arguments', () => {
-        const words = [''];
+    it('should return an array when given an [array of strings] and an [array-of-arrays of strings] as arguments', () => {
+        const words = ['~'];
         const grid = [
-            ['']
+            ['~']
         ];
 
         const result = findWordsInGrid(words, grid)
 
-        expect(typeof result).toEqual('object');
+        expect(Array.isArray(result)).toBeTruthy();
     });
 
     describe('directional search', () => {
-        it('should find a horizontal word when that word is the only thing in the grid', () => {
+        it('should find a horizontal word when that word is on the first line in the grid', () => {
             const words = ['WORD'];
             const grid = [
                 ['W','O','R','D']
@@ -29,7 +29,7 @@ describe('findWordsInGrid', () => {
             expect(result).toEqual(expected);
         });
 
-        it('should find a horizontal word when that word when it is not on the first line', () => {
+        it('should find a horizontal word when that word is on the last line in the grid', () => {
             const words = ['WORD'];
             const grid = [
                             ['~','~','~','~'],
@@ -42,7 +42,7 @@ describe('findWordsInGrid', () => {
             expect(result).toEqual(expected);
         });
 
-        it('should find a horizontal word when that word when it is aligned on the right side of the grid', () => {
+        it('should find a horizontal word when that word is aligned on the right side of the grid', () => {
             const words = ['WORD'];
             const grid = [
                 ['~','W','O','R','D']
@@ -54,7 +54,7 @@ describe('findWordsInGrid', () => {
             expect(result).toEqual(expected);
         });
 
-        it('should find multiple horizontal words', () => {
+        it('should find multiple horizontal words and return the expected array of found letters', () => {
             const words = ['WORD','TEST'];
             const grid = [
                             ['W','O','R','D'],
