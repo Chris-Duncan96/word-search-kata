@@ -3,6 +3,7 @@ const WordSearcher = require('./WordSearcher');
 const findWordsInGrid = require('./findWordsInGrid');
 
 jest.mock('./findWordsInGrid');
+console.log = jest.fn(); // Disabling unneccesary logging in jest tests
 
 describe('WordSearcher', () => {
     const defaultInputFile = './WordSearches/twoLine.txt';
